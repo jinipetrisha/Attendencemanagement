@@ -1,0 +1,32 @@
+<!-- attendance_app/templates/attendance_app/view_attendance.html -->
+<!DOCTYPE html>
+<html>
+<head><title>Attendance Records</title></head>
+<body>
+    <h2>View Attendance</h2>
+    <form method="get">
+        Class ID: <input type="text" name="class_id" value="{{ class_id }}"><br>
+        Subject: <input type="text" name="subject" value="{{ subject }}"><br>
+        Date: <input type="date" name="date" value="{{ date }}"><br>
+        <button type="submit">Filter</button>
+    </form>
+    <hr>
+    <table border="1">
+        <tr>
+            <th>Name</th><th>Student ID</th><th>Class</th><th>Subject</th><th>Date</th><th>Time</th>
+        </tr>
+        {% for att in attendances %}
+        <tr>
+            <td>{{ att.student.name }}</td>
+            <td>{{ att.student.student_id }}</td>
+            <td>{{ att.class_id }}</td>
+            <td>{{ att.subject }}</td>
+            <td>{{ att.date }}</td>
+            <td>{{ att.time }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No records found.</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

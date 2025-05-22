@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, {{ student.name }}</h2>
+    <p>Student ID: {{ student.student_id }}</p>
+    <p>Attendance for Today: {{ attended_today|yesno:"Present,Absent" }}</p>
+    <p>Total Days: {{ total_days }}</p>
+    <p>Present Days: {{ present_days }}</p>
+    <p>Attendance Percentage: {{ percent }}%</p>
+</body>
+</html>

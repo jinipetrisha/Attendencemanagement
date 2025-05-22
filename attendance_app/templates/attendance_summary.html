@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Summary</title>
+</head>
+<body>
+    <h2>Today's Attendance Summary</h2>
+    <table border="1">
+        <tr>
+            <th>Section</th>
+            <th>Total Students</th>
+            <th>Present</th>
+            <th>Absent</th>
+        </tr>
+        {% for item in summary %}
+        <tr>
+            <td>{{ item.section }}</td>
+            <td>{{ item.total }}</td>
+            <td>{{ item.present|length }}</td>
+            <td>{{ item.absent|length }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'teacher_dashboard' %}">← Back to Dashboard</a>
+</body>
+</html>

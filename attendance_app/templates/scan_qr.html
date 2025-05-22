@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan QR & Face</title>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+
+<body>
+    <h2>Scan QR and Face for Attendance</h2>
+
+    <!-- QR Scanner -->
+    <div id="qr-reader" style="width: 300px;"></div>
+    <br>
+    <p><strong>QR Result:</strong> <span id="qr-result">Waiting for scan...</span></p>
+
+    <!-- Attendance Form -->
+    <form method="POST" id="attendance-form">
+        {% csrf_token %}
+        <input type="hidden" name="qr_data" id="qr-data">
+
+        <!-- Webcam -->
+        <video id="video" width="400" autoplay></video>
+        <input type="hidden" name="image_data" id="image-data">
+
+        <br>
+        <button type="submit">Submit Attendance</button>
+    </form>
+
+    <script>
+        // ✅ QR Code scanner
+        const qrResultSpan = document.getElementById("qr-result");
+        const qrDataInput = document.getElementById("qr-data");
+
+        function onScanSuccess(qrMessage) {
+            qrResultSpan.innerText = qrMessage;
+            qrDataInput.value = qrMessage;
+            html5QrCode.stop(); // Stop scanning after success
+        }
+
+        const html5QrCode = new Html5Qrcode("qr-reader");
+        html5QrCode.start(
+            { facingMode: "environment" }, // back camera
+            { fps: 10, qrbox: 250 },
+            onScanSuccess
+        ).catch(err => {
+            console.error("QR Scanner Error:", err);
+        });
+
+        // ✅ Webcam and face image capture
+        const video = document.getElementById('video');
+        const imageDataInput = document.getElementById('image-data');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Webcam access error:", err);
+            });
+
+        // ✅ Submit handler
+        const form = document.getElementById("attendance-form");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // stop default submission
+
+            // Take photo from video
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+
+            const base64Image = canvas.toDataURL('image/jpeg');
+            imageDataInput.value = base64Image;
+
+            form.submit(); // now submit the form
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Student</title>
+    <style>
+        .message { font-weight: bold; margin: 10px 0; }
+        .success { color: green; }
+        .warning { color: orange; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Register Student</h2>
+
+    <!-- ✅ Django Messages Block -->
+    {% if messages %}
+        {% for message in messages %}
+            <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Name:</label>
+        <input type="text" name="name" required><br><br>
+
+        <label>Student ID:</label>
+        <input type="text" name="student_id" required><br><br>
+
+        <input type="hidden" name="image_data" id="image_data">
+        <button type="submit">Register</button>
+    </form>
+
+    <video id="video" width="320" height="240" autoplay></video>
+
+    <script>
+        const video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+            video.srcObject = stream;
+        }).catch(err => {
+            alert("Camera access is required.");
+        });
+
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const canvas = document.createElement('canvas');
+            canvas.width = 320;
+            canvas.height = 240;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            document.getElementById('image_data').value = canvas.toDataURL('image/jpeg');
+            this.submit();
+        });
+    </script>
+</body>
+</html>
