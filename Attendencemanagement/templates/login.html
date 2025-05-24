@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Attendance System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    .login-options {
+      margin-top: 30px;
+    }
+    .btn {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 16px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Login as</h1>
+
+  <form method="POST" action="{{ url_for('login') }}">
+    <div class="login-options">
+      <button type="submit" name="role" value="student" class="btn">Student</button>
+      <button type="submit" name="role" value="teacher" class="btn">Teacher</button>
+    </div>
+  </form>
+
+</body>
+</html>

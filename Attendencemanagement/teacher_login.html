@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Login</title>
+</head>
+<body>
+    <h2>Teacher Login</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <p style="color:red;">{{ messages[0] }}</p>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+        <label for="teacher_type">Select Type:</label>
+        <select name="teacher_type" required>
+            <option value="">--Select--</option>
+            <option value="subject_teacher">Subject Teacher</option>
+            <option value="class_teacher">Class Teacher</option>
+        </select>
+        <br><br>
+
+        <label for="username">Username:</label>
+        <input type="text" name="username" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
